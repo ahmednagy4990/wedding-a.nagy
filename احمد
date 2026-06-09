@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف أحمد & رحمة</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;600;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* إجبار المتصفح على إعطاء الأولوية القصوى للخطوط المجلوبة عبر الإنترنت */
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            background: linear-gradient(135deg, #fff0f2 0%, #ffd1d9 50%, #fecdd3 100%);
+            color: #4c0519;
+            overflow-x: hidden;
+        }
+        .font-serif-ar {
+            font-family: 'Amiri', Georgia, serif !important;
+        }
+        .font-kufi {
+            font-family: 'Reem Kufi', 'Cairo', sans-serif !important;
+        }
+        
+        /* تأثيرات الألوان الذهبية والوردية الفاخرة */
+        .gold-text {
+            background: linear-gradient(135deg, #b38728 0%, #fcf6ba 30%, #bf953f 70%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border {
+            border-image: linear-gradient(to right, #aa771c, #d4af37, #fcf6ba, #d4af37, #aa771c) 1;
+        }
+        .gold-btn {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            color: #4c0519;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .gold-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* حركة فتح المغلف الوردي التفاعلي */
+        .envelope-wrapper {
+            perspective: 1000px;
+            transition: all 1s ease;
+        }
+        .envelope {
+            position: relative;
+            background: #a24256;
+            box-shadow: 0 20px 40px rgba(76, 5, 25, 0.3);
+            transition: transform 0.8s ease-in-out;
+            transform-style: preserve-3d;
+        }
+        .envelope.open {
+            transform: translateY(150px) rotateX(-10deg);
+        }
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #b54f65;
+            clip-path: polygon(0 0, 50% 50%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out 0.2s;
+            z-index: 3;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+        }
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+            height: 95%;
+            background: #fffcfc;
+            color: #4c0519;
+            border-radius: 4px;
+            transition: transform 0.8s ease-in-out 0.6s, z-index 0s linear 0.6s;
+            z-index: 2;
+            padding: 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+        .envelope.open .letter {
+            transform: translateY(-160px);
+            z-index: 4;
+            height: 250%;
+        }
+
+        /* حركة القلوب الذهبية والوردية العائمة بالخلفية */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #ff8da1 0%, rgba(212, 175, 55, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-100px) translateX(40px) scale(1.6); opacity: 0.9; }
+        }
+
+        /* تأثير ظهور كارت الدعوة بسلاسة */
+        #mainCard {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        #mainCard.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* حركة نبضات زر الموسيقى الوردي */
+        .music-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4 md:p-8">
+
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0" id="sparkles-container"></div>
+
+    <div class="fixed top-4 left-4 z-50 flex flex-col gap-2">
+        <button id="musicToggle" class="w-12 h-12 rounded-full bg-[#a24256] border border-[#d4af37] text-[#fcf6ba] flex items-center justify-center shadow-lg focus:outline-none hover:scale-105 transition-transform">
+            <i id="musicIcon" class="fas fa-music"></i>
+        </button>
+
+        <audio id="quranAudio">
+            <source src="https://audio.qurancdn.com/Alafasy/mp3/030021.mp3" type="audio/mp3">
+        </audio>
+        <audio id="bgMusic" loop>
+            <source src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Fr%C3%A9d%C3%A9ric_Chopin_-_Nocturne_in_E-flat_major%2C_Op._9%2C_No._2.mp3" type="audio/mp3">
+        </audio>
+    </div>
+
+    <div class="w-full max-w-2xl z-10 my-auto flex flex-col items-center justify-center">
+
+        <div id="envelopeScreen" class="w-full flex flex-col items-center py-10">
+            <div class="text-center mb-10 px-4">
+                <p class="text-[#831a32] text-lg font-kufi tracking-widest mb-2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                <h2 class="text-3xl md:text-4xl font-serif-ar text-[#831a32] font-bold mb-4">دعوة زفاف زكيّة</h2>
+                <p class="text-[#5c1d2c] text-sm max-w-sm mx-auto font-kufi">تفضلوا بفتح المغلف لحضور حفل زفاف العمر وسماع الآية الكريمة.</p>
+            </div>
+
+            <div class="envelope-wrapper w-80 h-52 md:w-96 md:h-60 cursor-pointer" onclick="openEnvelope()">
+                <div class="envelope w-full h-full rounded-b-lg border border-gold-border flex items-center justify-center">
+                    <div class="flap"></div>
+                    
+                    <div class="absolute z-10 w-16 h-16 bg-[#d4af37] hover:bg-[#f3e7c4] rounded-full border-4 border-[#a24256] flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110">
+                        <span class="font-serif-ar text-[#4c0519] font-bold text-xl">أ & ر</span>
+                    </div>
+
+                    <div class="letter shadow-inner text-center flex flex-col justify-between">
+                        <div class="border-2 border-dashed border-[#d4af37]/60 h-full p-2 flex flex-col justify-center items-center">
+                            <p class="font-serif-ar text-sm text-[#4c0519] font-bold">دعوة فرح</p>
+                            <p class="text-xs text-[#a24256] mt-1 font-kufi">أحمد & رحمة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-[#831a32] text-sm mt-8 animate-pulse font-kufi"><i class="fas fa-hand-pointer ml-2"></i> اضغط على الختم لفتح الدعوة والاستماع للآية الكريمة</p>
+        </div>
+
+        <div id="mainCard" class="hidden w-full bg-[#fffcfc] border-2 border-[#d4af37]/80 rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden my-6">
+            
+            <div class="absolute top-2 right-2 w-10 h-10 border-t-2 border-r-2 border-[#d4af37] rounded-tr-lg"></div>
+            <div class="absolute top-2 left-2 w-10 h-10 border-t-2 border-l-2 border-[#d4af37] rounded-tl-lg"></div>
+            <div class="absolute bottom-2 right-2 w-10 h-10 border-b-2 border-r-2 border-[#d4af37] rounded-br-lg"></div>
+            <div class="absolute bottom-2 left-2 w-10 h-10 border-b-2 border-l-2 border-[#d4af37] rounded-tl-lg"></div>
+
+            <div class="text-center mb-8">
+                <span class="text-[#d4af37] text-xl font-serif-ar block mb-2">﷽</span>
+                <p id="quranText" class="text-[#831a32] font-serif-ar text-base md:text-xl italic px-4 leading-relaxed font-bold transition-all duration-300">
+                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                </p>
+                
+                <button onclick="playQuranVerse()" class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ffe4e6] border border-[#ffccd5] text-[#831a32] hover:bg-[#ffd1d9] transition-all text-xs font-kufi shadow-sm">
+                    <i id="quranBtnIcon" class="fas fa-play text-xs text-[#d4af37]"></i>
+                    <span id="quranBtnText">استمع للآية بصوت الشيخ العفاسي</span>
+                </button>
+                
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mx-auto mt-4"></div>
+            </div>
+
+            <div class="text-center my-6">
+                <p class="text-[#a24256] text-xs md:text-sm uppercase tracking-widest mb-3 font-kufi">يسعدنا ويشرفنا دعوتكم لحفل زفاف</p>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 my-4">
+                    <h1 class="text-4xl md:text-5xl font-serif-ar text-[#831a32] font-bold tracking-wide">أحمد</h1>
+                    <span class="text-2xl md:text-3xl text-[#d4af37] font-serif-ar my-1 md:my-0">&</span>
+                    <h1 class="text-4xl md:text-5xl font-serif-ar text-[#831a32] font-bold tracking-wide">رحمة</h1>
+                </div>
+                
+                <p class="text-[#5c1d2c] text-sm md:text-base font-kufi mt-2">وذلك بمشيئة الله تعالى يوم الجمعة</p>
+                <div class="inline-block bg-[#ffe4e6] border border-[#d4af37]/40 rounded-lg px-6 py-2 my-4">
+                    <p class="text-[#831a32] font-bold text-lg md:text-xl font-kufi">19 / 06 / 2026 م</p>
+                </div>
+            </div>
+
+            <div class="bg-[#fff5f6] border border-[#ffccd5] rounded-xl p-6 my-8 text-center shadow-inner">
+                <h3 class="text-lg font-kufi text-[#831a32] mb-3"><i class="fas fa-map-marker-alt ml-2 text-[#d4af37]"></i> مكان الحفل وموعده</h3>
+                <p class="text-[#4c0519] font-serif-ar text-lg leading-relaxed">
+                    يقام الحفل في تمام الساعة السابعة مساءً <br>
+                    بـ <span class="text-[#831a32] font-bold text-xl font-kufi">قاعة دار عمر</span>
+                </p>
+                <p class="text-[#831a32]/80 text-sm mt-2 font-serif-ar">
+                    بجوار معهد المدينة - طريق سقارة المريوطية
+                </p>
+                <p class="text-[#831a32] text-xs font-kufi mt-4 tracking-wider">وحضوركم يكتمل به بهاء فرحتنا .. والدعوة عامة لكم جميعاً</p>
+
+                <div class="mt-5">
+                    <a href="https://maps.google.com/?q=طريق+سقارة+المريوطية+بجوار+معهد+المدينة" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full gold-btn text-sm font-kufi">
+                        <i class="fas fa-route"></i>
+                        عرض موقع القاعة على الخريطة
+                    </a>
+                </div>
+            </div>
+
+            <div class="my-8">
+                <p class="text-center text-[#a24256] text-xs font-kufi mb-4 uppercase tracking-widest">الوقت المتبقي لليوم الكبير</p>
+                <div class="grid grid-cols-4 gap-2 max-w-sm mx-auto text-center">
+                    <div class="bg-[#ffe4e6] border border-[#ffccd5] rounded-lg p-2.5 shadow-sm">
+                        <span id="days" class="block text-xl md:text-2xl font-bold text-[#831a32]">00</span>
+                        <span class="text-[10px] md:text-xs text-[#a24256] font-kufi">يوم</span>
+                    </div>
+                    <div class="bg-[#ffe4e6] border border-[#ffccd5] rounded-lg p-2.5 shadow-sm">
+                        <span id="hours" class="block text-xl md:text-2xl font-bold text-[#831a32]">00</span>
+                        <span class="text-[10px] md:text-xs text-[#a24256] font-kufi">ساعة</span>
+                    </div>
+                    <div class="bg-[#ffe4e6] border border-[#ffccd5] rounded-lg p-2.5 shadow-sm">
+                        <span id="minutes" class="block text-xl md:text-2xl font-bold text-[#831a32]">00</span>
+                        <span class="text-[10px] md:text-xs text-[#a24256] font-kufi">دقيقة</span>
+                    </div>
+                    <div class="bg-[#ffe4e6] border border-[#ffccd5] rounded-lg p-2.5 shadow-sm">
+                        <span id="seconds" class="block text-xl md:text-2xl font-bold text-[#831a32]">00</span>
+                        <span class="text-[10px] md:text-xs text-[#a24256] font-kufi">ثانية</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-[#ffccd5] my-8">
+
+            <div id="customModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+                <div class="bg-[#fffcfc] border-2 border-[#d4af37] rounded-xl p-6 max-w-sm w-full text-center shadow-2xl">
+                    <div class="w-16 h-16 bg-[#ffe4e6] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#ffccd5]">
+                        <i class="fas fa-link text-[#831a32] text-2xl"></i>
+                    </div>
+                    <h4 class="text-[#831a32] font-kufi font-bold text-lg mb-2" id="modalTitle">تم نسخ الرابط!</h4>
+                    <p class="text-[#5c1d2c] text-sm mb-6 font-kufi" id="modalMessage">تم نسخ الرابط بنجاح.</p>
+                    <button onclick="closeModal()" class="w-full py-2 bg-[#d4af37] text-[#4c0519] font-bold rounded-lg font-kufi hover:bg-[#f3e7c4] transition-colors">موافق</button>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <button onclick="copyInvitationLink()" class="flex items-center gap-2 px-6 py-3 rounded-full gold-btn text-sm w-full sm:w-auto justify-center font-kufi">
+                    <i class="far fa-copy"></i>
+                    نسخ رابط الدعوة لإرسالها للأحباب
+                </button>
+            </div>
+
+            <p class="text-center text-[#a24256] text-[11px] font-kufi mt-8">الدعوة عامة لجميع الأحباب والأصدقاء في قاعة دار عمر.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // توليد تأثير قلوب خفيفة عائمة بالخلفية تلقائياً
+        const container = document.getElementById('sparkles-container');
+        for (let i = 0; i < 25; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDelay = Math.random() * 5 + 's';
+            sparkle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            container.appendChild(sparkle);
+        }
+
+        // إدارة مشغل الموسيقى وقراءة القرآن الكريم
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        const quranAudio = document.getElementById('quranAudio');
+        
+        const musicIcon = document.getElementById('musicIcon');
+        const quranBtnIcon = document.getElementById('quranBtnIcon');
+        const quranBtnText = document.getElementById('quranBtnText');
+        const quranText = document.getElementById('quranText');
+
+        let isMusicPlaying = false;
+        let isQuranPlaying = false;
+
+        // للتحكم في الأزرار
+        musicToggle.addEventListener('click', () => {
+            if (isQuranPlaying) {
+                stopQuran();
+            }
+            toggleMusic();
+        });
+
+        // تشغيل وإيقاف موسيقى الخلفية
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicIcon.className = 'fas fa-music';
+                musicToggle.classList.remove('animate-spin');
+            } else {
+                bgMusic.play().then(() => {
+                    musicIcon.className = 'fas fa-pause';
+                    musicToggle.classList.add('animate-spin');
+                }).catch(e => {
+                    console.log("سياسة الحماية بالمتصفح تمنع التشغيل دون نقرة أولية.");
+                });
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // تشغيل صوت الآية الكريمة بشكل فردي
+        function playQuranVerse() {
+            if (isQuranPlaying) {
+                stopQuran();
+                if (isMusicPlaying) {
+                    bgMusic.play();
+                    musicIcon.className = 'fas fa-pause';
+                }
+            } else {
+                bgMusic.pause();
+                musicIcon.className = 'fas fa-music';
+                
+                quranAudio.currentTime = 0;
+                quranAudio.play().then(() => {
+                    isQuranPlaying = true;
+                    quranBtnIcon.className = 'fas fa-stop text-[#831a32]';
+                    quranBtnText.innerText = 'إيقاف التلاوة العطرة';
+                    quranText.classList.add('scale-105', 'text-[#d4af37]');
+                }).catch(err => {
+                    console.log("خطأ في تشغيل الآية الكريمة.");
+                });
+            }
+        }
+
+        function stopQuran() {
+            quranAudio.pause();
+            isQuranPlaying = false;
+            quranBtnIcon.className = 'fas fa-play text-[#d4af37]';
+            quranBtnText.innerText = 'استمع للآية بصوت الشيخ العفاسي';
+            quranText.classList.remove('scale-105', 'text-[#d4af37]');
+        }
+
+        // مراقبة انتهاء صوت القرآن للانتقال التلقائي لموسيقى الخلفية
+        quranAudio.onended = function() {
+            stopQuran();
+            if (!isMusicPlaying) {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.className = 'fas fa-pause';
+                    musicToggle.classList.add('animate-spin');
+                });
+            }
+        };
+
+        // دالة فتح المغلف التفاعلي
+        function openEnvelope() {
+            const envelope = document.querySelector('.envelope');
+            envelope.classList.add('open');
+            
+            quranAudio.play().then(() => {
+                isQuranPlaying = true;
+                quranBtnIcon.className = 'fas fa-stop text-[#831a32]';
+                quranBtnText.innerText = 'إيقاف التلاوة العطرة';
+                quranText.classList.add('scale-105', 'text-[#d4af37]');
+            }).catch(err => {
+                toggleMusic();
+            });
+
+            setTimeout(() => {
+                document.getElementById('envelopeScreen').classList.add('hidden');
+                const mainCard = document.getElementById('mainCard');
+                mainCard.classList.remove('hidden');
+                mainCard.offsetHeight; 
+                mainCard.classList.add('show');
+            }, 1400);
+        }
+
+        // حساب الوقت المتبقي لحفل الزفاف (19 يونيو 2026 في تمام الساعة 7:00 مساءً)
+        const weddingDate = new Date("June 19, 2026 19:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(d).padStart(2, '0');
+            document.getElementById("hours").innerText = String(h).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function showModal(title, message) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        function copyInvitationLink() {
+            const dummy = document.createElement('input');
+            const text = window.location.href;
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            showModal("تم نسخ الرابط بنجاح!", "رابط الدعوة تم حفظه الآن في ذاكرة هاتفك، يمكنك إرساله ولصقه بضغطة واحدة لأقاربك وأصحابك عبر الواتساب وسيعمل الخط والصوت لديهم بكل ثبات وبشكل فوري.");
+        }
+    </script>
+</body>
+</html>
